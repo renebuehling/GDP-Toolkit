@@ -122,6 +122,7 @@ namespace GameDevProfi.FileManagement
                 }
                 else
                 {
+                    EditorGUILayout.HelpBox("Patching is executed when you select the patch command from menu "+Main.MenuFolderLabel+".", MessageType.Info);
                     string[] lines  = src.value.Split(new char[] { '|' });
                     EditorGUILayout.BeginVertical();
                     for(int i=0; i<lines.Length; i++)

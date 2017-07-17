@@ -35,10 +35,10 @@ namespace GameDevProfi.Utils
     /// <summary>
     /// Utilities related to XML processing.
     /// </summary>
-    public class XML 
+    public class XML
     {
         /// <summary>
-        /// Serializes the given object into the given file.
+        /// Serializes the given object into a string.
         /// </summary>
         /// <param name="data">Object to save.</param>
         /// <returns>Serialization string.</returns>
@@ -66,14 +66,14 @@ namespace GameDevProfi.Utils
         }
 
         /// <summary>
-        /// Loads an object from a file.
+        /// Loads an object from a string.
         /// </summary>
         /// <param name="xml">XML sourcecode.</param>
         /// <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
         /// <returns>The new object</returns>
         /// <see cref="http://tech.pro/tutorial/798/csharp-tutorial-xml-serialization"/>
         /// <see cref="http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer"/>
-        /// <see cref="place(string)"/> 
+        /// <see cref="Load{T}(string)"/>
         public static object Load(string xml, System.Type dataType)
         {
             Debug.Log("read: " + xml);
@@ -97,6 +97,19 @@ namespace GameDevProfi.Utils
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Loads an object from a string.
+        /// Same as <see cref="Load(string, System.Type)"/> 
+        /// with typeparam notation.
+        /// </summary>
+        /// <typeparam name="T">Deserialization type, class that should be instanced.</typeparam>
+        /// <param name="xml">XML sourcecode.</param>
+        /// <returns>The new object, deserialized from xml.</returns>
+        public static T Load<T>(string xml)
+        {
+            return (T)System.Convert.ChangeType(Load(xml,typeof(T)), typeof(T));
         }
     }
 }
