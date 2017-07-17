@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GDP-Toolkit</name>
+    </assembly>
+    <members>
+        <member name="T:GameDevProfi.Utils.UI">
+            <summary>
+            Utilities related toSpace UI programming using 
+            Unity's new GUI system.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.UI.projectCoordinates(UnityEngine.RectTransform,UnityEngine.RectTransform)">
+            <summary>
+            Calculates the position from a gui element into another UI coordinate space. 
+            </summary>
+            <param name="fromObj">Desired position, the position that we want to map into the other space.</param>
+            <param name="toSpace">Target coordinate space, the parent of the element that we want to move to overlay <c>fromObj</c>.</param>
+            <returns>The localPosition relative to <c>toSpace</c> that matches an overlay position to <c>fromObj</c>.</returns>
+            <seealso cref="!:https://forum.unity3d.com/threads/find-anchoredposition-of-a-recttransform-relative-to-another-recttransform.330560/#post-2702014"/>
+        </member>
+        <member name="T:GameDevProfi.Utils.WatchForError">
+            <summary>
+            Utility to track Unity's errors which cannot be caught by exception catching. 
+            </summary>
+            <remarks>
+            <para>
+            Example Use Case:  <br/>
+            When loading a scene which is not included in the build, Unity will just add an
+            error message to output saying <c>Scene '...' couldn't be loaded because it has not been added to the build settings or the AssetBundle has not been loaded.</c>
+            </para>
+            <para>
+            A way to react on scene loading failure is to attach an log message output recorder
+            to the application and see if an error occurs while the scene loading attemp is running.
+            This is what this class does.
+            </para>
+            <para>
+            Usage:
+            <list type="bullets">
+            <item>Create and start an instance of <c>WatchForError</c> right before the critical line of code. Use <c>WatchForError.startNew()</c> for this.</item>
+            <item>Call <c>stop()</c> right after the critical line.</item>
+            <item>Look at the number of <c>errors</c> and react accordingly.</item>
+            </list>
+            </para>
+            <para>
+            Example:<br/>
+            <code>
+            WatchForError watch = WatchForError.startNew();
+            SceneManager.LoadScene("NonExistingLevel"); 
+            if (watch.stop().errors>0) Debug.Log("Scene could not be loaded.");
+            </code>
+            </para>
+            </remarks>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.startNew">
+            <summary>
+            Creates a new instance which is started automatically.
+            </summary>
+            <returns>New Watcher.</returns>
+        </member>
+        <member name="F:GameDevProfi.Utils.WatchForError.errors">
+            <summary>Number of errors recorded since start/creation of object.</summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WatchForError.warnings">
+            <summary>Number of warnings recorded since start/creation of object.</summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.#ctor">
+            <summary>Creates a new instance and calls start().</summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.Finalize">
+            <summary>Unregisters any listeners by calling stop() on destruction.</summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.start">
+            <summary>
+            Starts recording of messages. It is <b>not</b> necessary to call
+            this command usually, as it is automatically called on object creation.
+            Use <c>start()</c> only to resume an observation after calling <c>stop()</c>.
+            </summary>
+            <returns>This object.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.stop">
+            <summary>
+            Stops recording of messages. Automatically called on destruction. 
+            </summary>
+            <returns>This object.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.WatchForError.Application_logMessageReceived(System.String,System.String,UnityEngine.LogType)">
+            <summary>
+            Implements the recording.
+            </summary>
+            <param name="condition"></param>
+            <param name="stackTrace"></param>
+            <param name="type"></param>
+        </member>
+        <member name="T:GameDevProfi.Utils.XML">
+            <summary>
+            Utilities related to XML processing.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.XML.Save(System.Object)">
+            <summary>
+            Serializes the given object into the given file.
+            </summary>
+            <param name="data">Object to save.</param>
+            <returns>Serialization string.</returns>
+            <see cref="!:http://tech.pro/tutorial/798/csharp-tutorial-xml-serialization"/>
+            <see cref="!:http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.XML.Load(System.String,System.Type)">
+            <summary>
+            Loads an object from a file.
+            </summary>
+            <param name="xml">XML sourcecode.</param>
+            <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
+            <returns>The new object</returns>
+            <see cref="!:http://tech.pro/tutorial/798/csharp-tutorial-xml-serialization"/>
+            <see cref="!:http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer"/>
+            <see cref="!:place(string)"/> 
+        </member>
+    </members>
+</doc>
