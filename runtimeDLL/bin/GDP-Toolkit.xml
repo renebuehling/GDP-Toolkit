@@ -4,6 +4,18 @@
         <name>GDP-Toolkit</name>
     </assembly>
     <members>
+        <member name="T:GameDevProfi.Utils.Colors">
+            <summary>
+            Shortcuts to color modifications.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.Colors.invert(UnityEngine.Color)">
+            <summary>
+            Returns the inverted color. This is black for white, purple for yellow, green for red, etc.
+            </summary>
+            <param name="c">Color to invert.</param>
+            <returns>Inverse color</returns>
+        </member>
         <member name="T:GameDevProfi.Utils.UI">
             <summary>
             Utilities related toSpace UI programming using 
