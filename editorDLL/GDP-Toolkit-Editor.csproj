@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="src\EditorUtils\EditorCommands.cs" />
     <Compile Include="src\FileManagement\FilePatcher.cs" />
     <Compile Include="src\EditorProfiles\EditorProfileData.cs" />
     <Compile Include="src\EditorProfiles\EditorProfileDataEditor.cs" />

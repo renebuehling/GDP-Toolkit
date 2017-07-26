@@ -4,5 +4,17 @@
         <name>GDP-Toolkit-Editor</name>
     </assembly>
     <members>
+        <member name="T:GameDevProfi.EditorUtils.EditorCommands">
+            <summary>
+            Various commands small extensions provided to 
+            Editor Environment.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.EditorUtils.EditorCommands.Group">
+            <summary>
+            Creates an Empty and moves all currently selected objects
+            to be children of this new empty.
+            </summary>
+        </member>
     </members>
 </doc>
