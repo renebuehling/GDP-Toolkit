@@ -156,7 +156,16 @@ namespace GameDevProfi.FileManagement
                             EditorGUILayout.BeginVertical(padded);
                                 elements[0]=EditorGUILayout.TextField(elements[0]);
                                 EditorGUILayout.LabelField("with file", EditorStyles.miniLabel);
-                                elements[1]=EditorGUILayout.TextField(elements[1]);
+                                EditorGUILayout.BeginHorizontal();
+                                    elements[1]=EditorGUILayout.TextField(elements[1]);
+                                    if (GUILayout.Button(new GUIContent("...","Browse file system"),EditorStyles.miniButton,GUILayout.Width(22)))
+                                    {
+                                        string path = "";
+                                        try { path = Path.GetDirectoryName(elements[1]); } catch{ path = ""; } //if path holds a filename, we try to open the file picker dialog in the file's folder.
+                                        path = EditorUtility.OpenFilePanel("Select File Path", path, "");
+                                        if (path.Length != 0) elements[1] = path;
+                                    }
+                                EditorGUILayout.EndHorizontal();
                                 f.checkVersion = EditorGUILayout.ToggleLeft(new GUIContent("Check Version", "For DLLs version numbers can be compared. If this is checked, then the file will only be copied when the version numbers differ."), f.checkVersion);
                                 //EditorGUILayout.LabelField(f.ToString());
                             EditorGUILayout.EndVertical();
