@@ -60,6 +60,7 @@
     <Compile Include="src\EditorProfiles\EditorProfileData.cs" />
     <Compile Include="src\EditorProfiles\EditorProfileDataEditor.cs" />
     <Compile Include="src\Main.cs" />
+    <Compile Include="src\ProblemFinder\ProblemFinderWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +72,11 @@
       <Name>GDP-Toolkit</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\exclam.png" />
+    <EmbeddedResource Include="Resources\bulb.png" />
+    <EmbeddedResource Include="Resources\bullet-ok.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)afterBuild.bat ${TargetDir}</PostBuildEvent>

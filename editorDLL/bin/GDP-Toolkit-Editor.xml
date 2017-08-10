@@ -16,5 +16,145 @@
             to be children of this new empty.
             </summary>
         </member>
+        <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow">
+            <summary>
+            Provides a window and some managment functionality for quick and easy
+            implementation of game specific / custom problem scanners.
+            Users can simply add a problem scanner to check for custom conditions
+            and requirements inside Unity editor.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.ShowWindow">
+            <summary>
+            Shows the window, used as menu hook.
+            </summary>
+        </member>
+        <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem">
+            <summary>
+            Base class for one found problem, shown in the ProblemFinder window.
+            Create an instance of a problem for each problem found and add them
+            to <see cref="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.problems"/> of your ProblemScanner instance.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.getLabel">
+            <summary>
+            Provides a short description of the problem. 
+            This is the text directly visible in the window list.
+            </summary>
+            <returns>A short summary of the problem.</returns>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.getFixDescription">
+            <summary>
+            A detailed description of how to fix the problem. 
+            This text is shown when the user clicks the item in the list.
+            </summary>
+            <returns>Detailed problem description.</returns>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.canAutoFix">
+            <summary>
+            Return true if you implemented an automatic solution of the
+            problem within <see cref="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.autoFix"/>.
+            If you do not override this method it will automatically 
+            return if <see cref="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.autoFix"/> is implemented/overriden.
+            </summary>
+            <returns>True if <see cref="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.autoFix"/> is implemented.</returns>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.autoFix">
+            <summary>
+            Subclasses should implement the automated solution
+            of the problem, if possible. This method is executed,
+            if the 'Fix now' button in the fix description dialog
+            is clicked or if a list item is ctrl+clicked.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem.select">
+            <summary>
+            Subclasses should implement the selection of the relevant object
+            in this method. This is usually the object that has the
+            problem. Use <code>Selection.ActiveGameObject</code> or similar
+            to perform the selection change.
+            </summary>
+        </member>
+        <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.GeneralProblemInfo">
+            <summary>
+            Convenience implementation of <see cref="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem"/> which simply
+            adds a textual description without fix to the Problem finder window.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.GeneralProblemInfo.#ctor(System.String,System.String)">
+            <summary>
+            Use instance of this class to quickly add text-only info to 
+            the Problem finder window.
+            </summary>
+            <param name="shortinfo">Label text shown in the window.</param>
+            <param name="longinfo">Long description text of the problem.</param>
+        </member>
+        <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScannerGUI">
+            <summary>
+            Storage of Problem scanner GUI status.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScannerGUI.expand">
+            <summary>
+            Is this problem category currently expanded?
+            </summary>
+        </member>
+        <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner">
+            <summary>
+            Base class for any module that adds problem scanning
+            functionality to the ProblemScanner window.
+            
+            Create a subclass, annotate it with <code>[UnityEditor.InitializeOnLoad]</code> 
+            and within the constructor of your ProblemScanner class add a new instance to <see cref="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.scanners"/>.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.problems">
+            <summary>
+            List of found problems. Add instances of <see cref="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem"/> 
+            to this list inside <see cref="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.scan"/>. Use <code>problems.Clear()</code>
+            to empty this list.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.gui">
+            <summary>
+            Cache of the current painting status. Just keep this untouched.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.getLabel">
+            <summary>
+            Subclasses can override this to provide a label for the scanner.
+            This is essentially the text of the foldable item group.
+            </summary>
+            <returns>Text of group, usually describing the problem category this scanner cares for, i.e. 'Character Setup', 'Level Consistency', etc.</returns>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.scan">
+            <summary>
+            Subclasses should implement the actual problem scanning here. 
+            This usually starts with <code>problems.Clear()</code>. Then
+            perform the testings and use <code>problems.Add(new Problem())</code>
+            to record problems found. (Use your subclasses of Problem).
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.ProblemScanner.removeDoubles">
+            <summary>
+            Auto called after scan(), implement Problem.Equals() for custom Problem classes.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.scanners">
+            <summary>
+            List of registered problem scanners.
+            To add your own, subclass ProblemScanner
+            and add it to this list on init. 
+            Use [InitializeOnLoad] and a static constructor
+            on your class to register when the dll loads.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.fixButton(GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem)">
+            <summary>
+            Draw the fix bulb icon.
+            </summary>
+            <param name="p">Problem to display.</param>
+            <returns><c>true</c>, if fix was applied, requiring a rescan of problems.</returns>
+        </member>
     </members>
 </doc>

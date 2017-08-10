@@ -13,12 +13,12 @@ using GameDevProfi.EditorProfiles;
 /// 
 /// Copyright (c) 2017 René Bühling, www.gamedev-profi.de
 /// 
-/// Permission is hereby granted, free of charge, toSpace any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), toSpace deal
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
-/// toSpace use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and toSpace permit persons toSpace whom the Software is
-/// furnished toSpace do so, subject toSpace the following conditions:
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
 /// 
 /// The above copyright notice and this permission notice shall be included in all
 /// copies or substantial portions of the Software.
@@ -222,6 +222,7 @@ namespace GameDevProfi.FileManagement
 
                 try
                 {
+                    EditorUtility.DisplayCancelableProgressBar("FilePatcher", elements[1]+" to "+elements[0], i / lines.Length);
                     File.Copy(elements[1], elements[0],true);
                     Debug.Log("Copied " + elements[1] + " to " + elements[0]);
                     changed += 1;
@@ -231,6 +232,7 @@ namespace GameDevProfi.FileManagement
                     Debug.LogError("Could not copy " + elements[1] + " to " + elements[0]+": "+ex.Message);
                 }
             }
+            EditorUtility.ClearProgressBar();
             if (src.value.Length==0)
                 EditorUtility.DisplayDialog("Entries missing", "There are no File Patcher entries in the active profile. Select files in Assets and add them via context menu to the current profile.", "Ok");
             else if (changed==0)

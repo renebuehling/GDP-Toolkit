@@ -9,12 +9,12 @@ using UnityEngine;
 /// 
 /// Copyright (c) 2017 René Bühling, www.gamedev-profi.de
 /// 
-/// Permission is hereby granted, free of charge, toSpace any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), toSpace deal
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
-/// toSpace use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and toSpace permit persons toSpace whom the Software is
-/// furnished toSpace do so, subject toSpace the following conditions:
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
 /// 
 /// The above copyright notice and this permission notice shall be included in all
 /// copies or substantial portions of the Software.
@@ -30,7 +30,7 @@ using UnityEngine;
 namespace GameDevProfi.Utils
 {
     /// <summary>
-    /// Utilities related toSpace UI programming using 
+    /// Utilities related to UI programming using 
     /// Unity's new GUI system.
     /// </summary>
     public class UI : MonoBehaviour
@@ -39,7 +39,7 @@ namespace GameDevProfi.Utils
         {
             float start = 0f;
             float from = 0f;
-            float toSpace = 0f;
+            float to = 0f;
             private void Start()
             {
                 start = Time.time;
@@ -47,7 +47,7 @@ namespace GameDevProfi.Utils
             public void Update()
             {
                 CanvasGroup cg = GetComponent<CanvasGroup>();
-                float a = Mathf.Lerp(from, toSpace, (Time.time - start));
+                float a = Mathf.Lerp(from, to, (Time.time - start));
                 cg.alpha = a;
                 if (cg.alpha == 1f) Destroy(this); //end of fade
             }
@@ -63,14 +63,14 @@ namespace GameDevProfi.Utils
         /// Calculates the position from a gui element into another UI coordinate space. 
         /// </summary>
         /// <param name="fromObj">Desired position, the position that we want to map into the other space.</param>
-        /// <param name="toSpace">Target coordinate space, the parent of the element that we want to move to overlay <c>fromObj</c>.</param>
-        /// <returns>The localPosition relative to <c>toSpace</c> that matches an overlay position to <c>fromObj</c>.</returns>
+        /// <param name="to">Target coordinate space, the parent of the element that we want to move to overlay <c>fromObj</c>.</param>
+        /// <returns>The localPosition relative to <c>to</c> that matches an overlay position to <c>fromObj</c>.</returns>
         /// <seealso cref="https://forum.unity3d.com/threads/find-anchoredposition-of-a-recttransform-relative-to-another-recttransform.330560/#post-2702014"/>
-        public static Vector2 projectCoordinates(RectTransform fromObj, RectTransform toSpace)
+        public static Vector2 projectCoordinates(RectTransform fromObj, RectTransform to)
         {
             Vector2 screenP = RectTransformUtility.WorldToScreenPoint(null, fromObj.position);
             Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(toSpace, screenP, null, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(to, screenP, null, out localPoint);
             return localPoint;
         }
 

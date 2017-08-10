@@ -16,9 +16,41 @@
             <param name="c">Color to invert.</param>
             <returns>Inverse color</returns>
         </member>
+        <member name="T:GameDevProfi.Utils.DLL">
+            <summary>
+            Contains helpers for working with a custom C# DLL.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.DLL.listAllResources">
+            <summary>
+            Creates a list of all resources like images that are embedded in the DLL.
+            Use this method for debugging and find valid resourceName parameters
+            for <see cref="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32)"/>.
+            </summary>
+            <returns>A dump of the loadable embedded resources.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32)">
+            <summary>
+            Loads an image embedded in the DLL into a Unity texture.
+            Use listAllResources() to find the resources available for load by this method. 
+            Note: The method uses the assembly of the calling script, which usually is
+            the DLL that you want resources to load from.
+            </summary>
+            <param name="resourceName">Name of the image to load. This is usally made of default project namespace (see project properties) plus folders (separated by dot) plus the actual filename.</param>
+            <param name="width">Width of the result image. This is usually the same as the size of the resource itself.</param>
+            <param name="height">Height of the result image. This is usually the same as the size of the resource itself.</param>
+            <returns>Image as texture or null if not loadable.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.DLL.ReadToEnd(System.IO.Stream)">
+            <summary>
+            Helper to read a the stream.
+            </summary>
+            <param name="stream">Stream</param>
+            <returns>Contents as byte array.</returns>
+        </member>
         <member name="T:GameDevProfi.Utils.UI">
             <summary>
-            Utilities related toSpace UI programming using 
+            Utilities related to UI programming using 
             Unity's new GUI system.
             </summary>
         </member>
@@ -27,8 +59,8 @@
             Calculates the position from a gui element into another UI coordinate space. 
             </summary>
             <param name="fromObj">Desired position, the position that we want to map into the other space.</param>
-            <param name="toSpace">Target coordinate space, the parent of the element that we want to move to overlay <c>fromObj</c>.</param>
-            <returns>The localPosition relative to <c>toSpace</c> that matches an overlay position to <c>fromObj</c>.</returns>
+            <param name="to">Target coordinate space, the parent of the element that we want to move to overlay <c>fromObj</c>.</param>
+            <returns>The localPosition relative to <c>to</c> that matches an overlay position to <c>fromObj</c>.</returns>
             <seealso cref="!:https://forum.unity3d.com/threads/find-anchoredposition-of-a-recttransform-relative-to-another-recttransform.330560/#post-2702014"/>
         </member>
         <member name="T:GameDevProfi.Utils.WatchForError">
@@ -124,7 +156,7 @@
             </summary>
             <param name="xml">XML sourcecode.</param>
             <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
-            <returns>The new object</returns>
+            <returns>The new object or null in case of problems.</returns>
             <see cref="!:http://tech.pro/tutorial/798/csharp-tutorial-xml-serialization"/>
             <see cref="!:http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer"/>
             <see cref="M:GameDevProfi.Utils.XML.Load``1(System.String)"/>

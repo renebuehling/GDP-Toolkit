@@ -9,12 +9,12 @@ using UnityEngine;
 /// 
 /// Copyright (c) 2017 René Bühling, www.gamedev-profi.de
 /// 
-/// Permission is hereby granted, free of charge, toSpace any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), toSpace deal
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
-/// toSpace use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and toSpace permit persons toSpace whom the Software is
-/// furnished toSpace do so, subject toSpace the following conditions:
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
 /// 
 /// The above copyright notice and this permission notice shall be included in all
 /// copies or substantial portions of the Software.
@@ -59,7 +59,11 @@ namespace GameDevProfi.EditorUtils
                 if (sharedParent == null) sharedParent = go.transform.parent; //collect the first parent
                 else if (sharedParent != go.transform.parent) { sharedParent = null; break; } //nth object: check if the parent is the same as the partent of the previous items. If not, use null, which means we do not have a shared parent for all items, but parents are different. We use the scene root in this case.
 
-            if (sharedParent != null) group.transform.parent = sharedParent; //create the group in the shared parent
+            if (sharedParent != null)
+            {
+                group.transform.parent = sharedParent; //create the group in the shared parent
+                group.transform.localScale = Vector3.one; //the group should be unscaled.
+            }
 
             foreach (GameObject go in gos)
                 go.transform.SetParent(group.transform);

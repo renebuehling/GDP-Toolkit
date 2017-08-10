@@ -70,7 +70,7 @@ namespace GameDevProfi.Utils
         /// </summary>
         /// <param name="xml">XML sourcecode.</param>
         /// <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
-        /// <returns>The new object</returns>
+        /// <returns>The new object or null in case of problems.</returns>
         /// <see cref="http://tech.pro/tutorial/798/csharp-tutorial-xml-serialization"/>
         /// <see cref="http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer"/>
         /// <see cref="Load{T}(string)"/>
