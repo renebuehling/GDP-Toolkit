@@ -67,6 +67,8 @@ namespace GameDevProfi.EditorUtils
 
             foreach (GameObject go in gos)
                 go.transform.SetParent(group.transform);
+
+            Selection.activeGameObject = group;
         }
 
         [MenuItem("Edit/Group Selected %g", true)]

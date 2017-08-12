@@ -301,7 +301,8 @@ namespace GameDevProfi.ProblemFinder
             {
                 if (!p.canAutoFix()) //no auto-fix, just show text
                     EditorUtility.DisplayDialog("Problem Solver", p.getFixDescription(), "Ok");
-                else if (EditorUtility.DisplayDialog("Problem Solver", p.getFixDescription(), "Fix now", "Cancel"))
+                else if (Event.current.control || //ctrl+click on bulb -> execute fix immediately
+                         EditorUtility.DisplayDialog("Problem Solver", p.getFixDescription(), "Fix now", "Cancel"))
                 {
                     p.autoFix();
                     return true;
