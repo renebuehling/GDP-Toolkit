@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="src\utils\Animation.cs" />
     <Compile Include="src\utils\Colors.cs" />
     <Compile Include="src\utils\DLL.cs" />
     <Compile Include="src\utils\UI.cs" />

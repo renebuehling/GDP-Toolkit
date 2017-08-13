@@ -55,9 +55,9 @@ namespace GameDevProfi.ProblemFinder
         private void loadIcons()
         {
             Debug.Log("Resources in problemfinder:\n"+DLL.listAllResources());
-            if (icoBulb == null) icoBulb = DLL.LoadImageResource("GameDevProfi.Resources.bulb.png",16,16);
-            if (icoProblem == null) icoProblem = DLL.LoadImageResource("GameDevProfi.Resources.exclam.png", 16, 16);
-            if (icoOk == null) icoOk = DLL.LoadImageResource("GameDevProfi.Resources.bullet-ok.png", 16, 16);
+            if (icoBulb == null) icoBulb = DLL.LoadImageResource("GameDevProfi.Resources.bulb.png",16,16,Color.magenta,GetType().Assembly);
+            if (icoProblem == null) icoProblem = DLL.LoadImageResource("GameDevProfi.Resources.exclam.png", 16, 16,Color.magenta, GetType().Assembly);
+            if (icoOk == null) icoOk = DLL.LoadImageResource("GameDevProfi.Resources.bullet-ok.png", 16, 16,Color.magenta, GetType().Assembly);
         }
 
 

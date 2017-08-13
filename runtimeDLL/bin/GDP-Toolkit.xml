@@ -4,6 +4,50 @@
         <name>GDP-Toolkit</name>
     </assembly>
     <members>
+        <member name="T:GameDevProfi.Utils.Animation">
+            <summary>
+            Contains utilities for animation calculation.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.Animation.timeScale01(System.Single)">
+            <summary>
+            Maps <code>Time.time</code> to a scale of [0..1] when a interval 
+            of <code>duration</code> seconds is intended.
+            
+            This is a reminder/shortcut helper, i.e. for using AnimationCurves:
+            - Define an AnimationCurve with keyframes with from 0 to 1 (horizontal axis).
+            - If you want to get the animation curve value with having one animation cycle be mapped to 2 seconds, use:
+             <code>animationCurve.Evaluate(Utils.timeScale(2f));</code>
+            
+            </summary>
+            <param name="duration">Desired animation duration in seconds.</param>
+            <returns>A value between 0 and 1.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.Animation.timeScale01(System.Single,System.Single)">
+            <summary>
+            Maps the given <code>time</code> to a scale of [0..1] when a interval 
+            of <code>duration</code> seconds is intended.
+            
+            This is a reminder/shortcut helper, i.e. for using AnimationCurves:
+            - Define an AnimationCurve with keyframes with from 0 to 1 (horizontal axis).
+            - If you want to get the animation curve value with having one animation cycle be mapped to 2 seconds, use:
+             <code>animationCurve.Evaluate(Utils.timeScale(Time.time,2f));</code>
+            
+            </summary>
+            <param name="time">Time stamp, usually something like <code>Time.time</code>.</param>
+            <param name="duration">Desired animation duration in seconds.</param>
+            <returns>A value between 0 and 1.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.Animation.eval(UnityEngine.AnimationCurve,System.Single)">
+            <summary>
+            Returns the y value from the given curve if the curve
+            should be mapped to a total length of <code>duration</code> seconds.
+            Uses <code>timeScale01(Time.time,duration)</code>.
+            </summary>
+            <param name="curve">Curve.</param>
+            <param name="duration">Duration.</param>
+            <returns>Current curve value.</returns>
+        </member>
         <member name="T:GameDevProfi.Utils.Colors">
             <summary>
             Shortcuts to color modifications.
@@ -21,15 +65,15 @@
             Contains helpers for working with a custom C# DLL.
             </summary>
         </member>
-        <member name="M:GameDevProfi.Utils.DLL.listAllResources">
+        <member name="M:GameDevProfi.Utils.DLL.listAllResources(System.Reflection.Assembly)">
             <summary>
             Creates a list of all resources like images that are embedded in the DLL.
             Use this method for debugging and find valid resourceName parameters
-            for <see cref="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32)"/>.
+            for <see cref="!:LoadImageResource(string, int, int)"/>.
             </summary>
             <returns>A dump of the loadable embedded resources.</returns>
         </member>
-        <member name="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32)">
+        <member name="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32,System.Reflection.Assembly)">
             <summary>
             Loads an image embedded in the DLL into a Unity texture.
             Use listAllResources() to find the resources available for load by this method. 
@@ -40,6 +84,19 @@
             <param name="width">Width of the result image. This is usually the same as the size of the resource itself.</param>
             <param name="height">Height of the result image. This is usually the same as the size of the resource itself.</param>
             <returns>Image as texture or null if not loadable.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.DLL.LoadImageResource(System.String,System.Int32,System.Int32,UnityEngine.Color,System.Reflection.Assembly)">
+            <summary>
+            Loads an image embedded in the DLL into a Unity texture.
+            Use listAllResources() to find the resources available for load by this method. 
+            Note: The method uses the assembly of the calling script, which usually is
+            the DLL that you want resources to load from.
+            </summary>
+            <param name="resourceName">Name of the image to load. This is usally made of default project namespace (see project properties) plus folders (separated by dot) plus the actual filename.</param>
+            <param name="width">Width of the result image. This is usually the same as the size of the resource itself.</param>
+            <param name="height">Height of the result image. This is usually the same as the size of the resource itself.</param>
+            <param name="fallbackColor">If the resource cannot be loaded a dummy image of size <code>width</code> x <code>height</code> is created and filled with this color.</param>
+            <returns>Image as texture or image colored <c>fallbackColor</c> if not loadable.</returns>
         </member>
         <member name="M:GameDevProfi.Utils.DLL.ReadToEnd(System.IO.Stream)">
             <summary>

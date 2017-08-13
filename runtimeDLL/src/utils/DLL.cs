@@ -16,10 +16,10 @@ namespace GameDevProfi.Utils
         /// for <see cref="LoadImageResource(string, int, int)"/>.
         /// </summary>
         /// <returns>A dump of the loadable embedded resources.</returns>
-        public static string listAllResources()
+        public static string listAllResources(Assembly assembly=null)
         {
-            Assembly a = Assembly.GetCallingAssembly(); // Assembly.GetExecutingAssembly();
-            string[] names = a.GetManifestResourceNames();
+            if (assembly==null) assembly = Assembly.GetCallingAssembly(); // Assembly.GetExecutingAssembly();
+            string[] names = assembly.GetManifestResourceNames();
             return string.Join("\n", names);            
         }
 
@@ -33,23 +33,57 @@ namespace GameDevProfi.Utils
         /// <param name="width">Width of the result image. This is usually the same as the size of the resource itself.</param>
         /// <param name="height">Height of the result image. This is usually the same as the size of the resource itself.</param>
         /// <returns>Image as texture or null if not loadable.</returns>
-        public static Texture2D LoadImageResource(string resourceName, int width, int height)
+        public static Texture2D LoadImageResource(string resourceName, int width, int height, Assembly a)
         {
-            Assembly a = Assembly.GetCallingAssembly();
-            Stream stream = a.GetManifestResourceStream(resourceName);
-            Texture2D texture = null;
-            if (stream == null)
+            try
             {
-                Debug.LogWarning("DLL Resource not found: "+resourceName);
-            }
-            else
+                if (a==null) a = Assembly.GetCallingAssembly();
+                Stream stream = a.GetManifestResourceStream(resourceName);
+                Texture2D texture = null;
+                if (stream == null)
+                {
+                    Debug.LogWarning("DLL Resource not found: "+resourceName);
+                }
+                else
+                {
+                    texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+                    texture.hideFlags = HideFlags.HideAndDontSave;
+                    texture.LoadImage(ReadToEnd(stream));
+                    //if (texture == null)  Debug.LogError("Missing Dll resource: " + resourceName);
+                }
+                return texture;
+            }catch(Exception ex)
             {
-                texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-                texture.hideFlags = HideFlags.HideAndDontSave;
-                texture.LoadImage(ReadToEnd(stream));
-                //if (texture == null)  Debug.LogError("Missing Dll resource: " + resourceName);
+                Debug.LogException(ex);
+                Debug.LogException(ex.InnerException);
+                Debug.Log(ex.StackTrace);
+                return null;
             }
-            return texture;
+        }
+
+        /// <summary>
+        /// Loads an image embedded in the DLL into a Unity texture.
+        /// Use listAllResources() to find the resources available for load by this method. 
+        /// Note: The method uses the assembly of the calling script, which usually is
+        /// the DLL that you want resources to load from.
+        /// </summary>
+        /// <param name="resourceName">Name of the image to load. This is usally made of default project namespace (see project properties) plus folders (separated by dot) plus the actual filename.</param>
+        /// <param name="width">Width of the result image. This is usually the same as the size of the resource itself.</param>
+        /// <param name="height">Height of the result image. This is usually the same as the size of the resource itself.</param>
+        /// <param name="fallbackColor">If the resource cannot be loaded a dummy image of size <code>width</code> x <code>height</code> is created and filled with this color.</param>
+        /// <returns>Image as texture or image colored <c>fallbackColor</c> if not loadable.</returns>
+        public static Texture2D LoadImageResource(string resourceName, int width, int height, Color fallbackColor, Assembly a)
+        {
+            Texture2D result = LoadImageResource(resourceName, width, height,a);
+            if (result==null)
+            {
+                result= new Texture2D(width, height, TextureFormat.ARGB32, false);
+                for (int y = 0; y < width; y++)
+                    for (int x = 0; x < width; x++)
+                        result.SetPixel(x, y, fallbackColor);
+                result.Apply();
+            }
+            return result;
         }
 
         /// <summary>
