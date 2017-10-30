@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 /// <summary>
 /// License:
@@ -75,6 +75,49 @@ namespace GameDevProfi.Utils
         }
 
 
+        /// <summary>
+        /// Scrolls immediately to a given object in the scrollview.
+        /// 
+        /// <b>Important:</b> 
+        /// Unity UI's scrolling component and UI setup is complex and full of variations. Therefore this
+        /// function may not always give the expected results. Simply try it. If it does not work, you may copy the
+        /// implementation of this function into your own code and customize as needed.
+        /// </summary>
+        /// <param name="scrollRect">ScrollView that should perform the scrolling.</param>
+        /// <param name="focusObject">Object to scroll to. Must be a child of scrollRect's content object.</param>
+        /// <param name="keepX">If true, scrolling does not apply to X.</param>
+        /// <param name="keepY">If true, scrolling does not apply to Y.</param>
+        /// <seealso cref="https://stackoverflow.com/questions/30766020/how-to-scroll-to-a-specific-element-in-scrollrect-with-unity-ui"/>
+        public static void scrollJumpTo(UnityEngine.UI.ScrollRect scrollRect, GameObject focusObject, bool keepX = false, bool keepY = false)
+        {
+            RectTransform contentPanel = scrollRect.content;
+            RectTransform target = focusObject.GetComponent<RectTransform>();
 
-	}
+            Canvas.ForceUpdateCanvases();
+
+            Vector2 result =
+                (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) //current scrollpos
+                - (
+                    (Vector2)scrollRect.transform.InverseTransformPoint((Vector2)target.position) //... pos of object
+                );
+
+            result.x += (scrollRect.GetComponent<RectTransform>().rect.width / 2); //try to scroll object into center
+            result.y -= (scrollRect.GetComponent<RectTransform>().rect.height / 2); //try to scroll object into center
+                                                                                    //Debug.Log("scrollRect.rect="+(scrollRect.GetComponent<RectTransform>().rect)+", result="+result);
+
+            result.x = Mathf.Clamp(result.x, 0, contentPanel.rect.width);
+            result.y = Mathf.Clamp(result.y, -contentPanel.rect.height, 0);
+
+            if (keepX) result.x = contentPanel.anchoredPosition.x;
+            if (keepY) result.y = contentPanel.anchoredPosition.y;
+
+            //scrollRect.inertia = false;
+            contentPanel.anchoredPosition = result;
+            scrollRect.StopMovement(); //Important: Stop any flow that may come from inertia, because it will falsify the programmatic scrolling results here (as we want a hard but reliable jump to a fixed position)
+            //Debug.Log("-> result=" + result +", c.ap="+ contentPanel.anchoredPosition+"c.rs="+contentPanel.rect.height); 
+        }
+
+
+
+    }
 }

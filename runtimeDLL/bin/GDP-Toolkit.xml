@@ -120,6 +120,21 @@
             <returns>The localPosition relative to <c>to</c> that matches an overlay position to <c>fromObj</c>.</returns>
             <seealso cref="!:https://forum.unity3d.com/threads/find-anchoredposition-of-a-recttransform-relative-to-another-recttransform.330560/#post-2702014"/>
         </member>
+        <member name="M:GameDevProfi.Utils.UI.scrollJumpTo(UnityEngine.UI.ScrollRect,UnityEngine.GameObject,System.Boolean,System.Boolean)">
+            <summary>
+            Scrolls immediately to a given object in the scrollview.
+            
+            <b>Important:</b> 
+            Unity UI's scrolling component and UI setup is complex and full of variations. Therefore this
+            function may not always give the expected results. Simply try it. If it does not work, you may copy the
+            implementation of this function into your own code and customize as needed.
+            </summary>
+            <param name="scrollRect">ScrollView that should perform the scrolling.</param>
+            <param name="focusObject">Object to scroll to. Must be a child of scrollRect's content object.</param>
+            <param name="keepX">If true, scrolling does not apply to X.</param>
+            <param name="keepY">If true, scrolling does not apply to Y.</param>
+            <seealso cref="!:https://stackoverflow.com/questions/30766020/how-to-scroll-to-a-specific-element-in-scrollrect-with-unity-ui"/>
+        </member>
         <member name="T:GameDevProfi.Utils.WatchForError">
             <summary>
             Utility to track Unity's errors which cannot be caught by exception catching. 
