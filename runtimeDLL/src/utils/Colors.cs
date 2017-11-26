@@ -43,5 +43,19 @@ namespace GameDevProfi.Utils
         {
             return new Color(1f-c.r, 1f-c.g, 1f-c.b);            
         }
+
+        /// <summary>
+        /// Changes the alpha value of a given color.
+        /// </summary>
+        /// <param name="c">Color to copy rgb from.</param>
+        /// <param name="value">New alpha value.</param>
+        /// <param name="incremental">If true, value will be added to the current alpha of the color. If false, value will be assigned as new alpha value of the color.</param>
+        /// <returns>Copy of color with changed alpha value.</returns>
+        /// <seealso cref="UI.changeAlpha"/>
+        public static Color changeAlpha(Color c, float value, bool incremental = false)
+        {
+            if (incremental) return new Color(c.r, c.g, c.b, c.a+value); 
+            else return new Color(c.r, c.g, c.b, value);            
+        }
     }
 }

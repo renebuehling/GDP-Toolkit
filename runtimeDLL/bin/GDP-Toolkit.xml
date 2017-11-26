@@ -60,6 +60,16 @@
             <param name="c">Color to invert.</param>
             <returns>Inverse color</returns>
         </member>
+        <member name="M:GameDevProfi.Utils.Colors.changeAlpha(UnityEngine.Color,System.Single,System.Boolean)">
+            <summary>
+            Changes the alpha value of a given color.
+            </summary>
+            <param name="c">Color to copy rgb from.</param>
+            <param name="value">New alpha value.</param>
+            <param name="incremental">If true, value will be added to the current alpha of the color. If false, value will be assigned as new alpha value of the color.</param>
+            <returns>Copy of color with changed alpha value.</returns>
+            <seealso cref="M:GameDevProfi.Utils.UI.changeAlpha(UnityEngine.UI.Graphic,System.Single,System.Boolean)"/>
+        </member>
         <member name="T:GameDevProfi.Utils.DLL">
             <summary>
             Contains helpers for working with a custom C# DLL.
@@ -135,6 +145,17 @@
             <param name="keepY">If true, scrolling does not apply to Y.</param>
             <seealso cref="!:https://stackoverflow.com/questions/30766020/how-to-scroll-to-a-specific-element-in-scrollrect-with-unity-ui"/>
         </member>
+        <member name="M:GameDevProfi.Utils.UI.changeAlpha(UnityEngine.UI.Graphic,System.Single,System.Boolean)">
+            <summary>
+            Changes the alpha value of a Graphic's color.
+            This is a shortcut to apply <see cref="M:GameDevProfi.Utils.Colors.changeAlpha(UnityEngine.Color,System.Single,System.Boolean)"/>
+            to the Graphic's color.
+            </summary>
+            <param name="g">Graphic to change, i.e. a Button, Image, etc.</param>
+            <param name="value">New alpha value or change to apply to the alpha value (see incremental parameter).</param>
+            <param name="incremental">If true, value will be added to the current alpha of the color. If false, value will be assigned as new alpha value of the color.</param>
+            <see cref="M:GameDevProfi.Utils.Colors.changeAlpha(UnityEngine.Color,System.Single,System.Boolean)"/>
+        </member>
         <member name="T:GameDevProfi.Utils.WatchForError">
             <summary>
             Utility to track Unity's errors which cannot be caught by exception catching. 
@@ -208,6 +229,75 @@
             <param name="stackTrace"></param>
             <param name="type"></param>
         </member>
+        <member name="T:GameDevProfi.Utils.WebForm">
+            <summary>
+            Encapsulates simple http submit requests and adds some basic error handling.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.formData">
+            <summary>
+            Cache of the form data collected with Add methods.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.URL">
+            <summary>
+            Cache of the URL to which the data is submitted.
+            Defined in constructor.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.#ctor(System.String)">
+            <summary>
+            Creates a new helper to post data to a www URL, i.e. a php script.
+            </summary>
+            <param name="URL">Address where the data is submitted to, something like http://www.example.com/file.php </param>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.Add(System.String,System.String)">
+            <summary>
+            Safely adds data to be submitted to the URL.
+            This method skips the parameter if value is an empty string.
+            When directly adding the data with a new MultipartFormDataSection object, 
+            adding an empty parameter causes an error.
+            </summary>
+            <param name="key">Name of the parameter</param>
+            <param name="value">Value to submit</param>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.Add(System.String,System.Int32)">
+            <summary>
+            Integer version of <see cref="M:GameDevProfi.Utils.WebForm.Add(System.String,System.String)"/>.
+            </summary>
+            <param name="key">Name of the parameter</param>
+            <param name="value">Value to submit</param>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.result">
+            <summary>
+            Contains the submission results. This field should always carry
+            an object an never be null. You can use <code>result.isDone</code>
+            to test if the submission was already completed.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.successful">
+            <summary>
+            Tiny helper that will be true if the submission was successful
+            and false when there was an error. Note: This makes sense only
+            after the submission was completed.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.submit">
+            <summary>
+            Performs the request, waits for it and updates <see cref="F:GameDevProfi.Utils.WebForm.successful"/>
+            and <see cref="F:GameDevProfi.Utils.WebForm.result"/>.
+            </summary>
+            <returns>Enumerator for Unity coroutine.</returns>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.resultAsJSON``1(System.Boolean)">
+            <summary>
+            Tries to parse the result that the server sent back after <see cref="M:GameDevProfi.Utils.WebForm.submit"/>
+            from a JSON structure into an object.
+            </summary>
+            <typeparam name="T">Class that should be instantiated and populated with the data from received JSON structure.</typeparam>
+            <param name="fallBackToNew">If true, a new object of class T will be created and returned in case of an error. Otherewise T's default will be returned (this is probably null).</param>
+            <returns>A new instance of T which fields are initialized with the data from JSON or a fallback object in case of error (see parameter fallBackToNew).</returns>
+        </member>
         <member name="T:GameDevProfi.Utils.XML">
             <summary>
             Utilities related to XML processing.
@@ -215,7 +305,7 @@
         </member>
         <member name="M:GameDevProfi.Utils.XML.Save(System.Object)">
             <summary>
-            Serializes the given object into a string.
+            Serializes the given object into a string in UTF-8 encoding.
             </summary>
             <param name="data">Object to save.</param>
             <returns>Serialization string.</returns>
@@ -224,7 +314,7 @@
         </member>
         <member name="M:GameDevProfi.Utils.XML.Load(System.String,System.Type)">
             <summary>
-            Loads an object from a string.
+            Loads an object from a string in UTF-8 encoding.
             </summary>
             <param name="xml">XML sourcecode.</param>
             <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
@@ -235,7 +325,7 @@
         </member>
         <member name="M:GameDevProfi.Utils.XML.Load``1(System.String)">
             <summary>
-            Loads an object from a string.
+            Loads an object from a string in UTF-8 encoding.
             Same as <see cref="M:GameDevProfi.Utils.XML.Load(System.String,System.Type)"/> 
             with typeparam notation.
             </summary>

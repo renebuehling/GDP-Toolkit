@@ -117,7 +117,19 @@ namespace GameDevProfi.Utils
             //Debug.Log("-> result=" + result +", c.ap="+ contentPanel.anchoredPosition+"c.rs="+contentPanel.rect.height); 
         }
 
-
+        /// <summary>
+        /// Changes the alpha value of a Graphic's color.
+        /// This is a shortcut to apply <see cref="Colors.changeAlpha(Color, float, bool)"/>
+        /// to the Graphic's color.
+        /// </summary>
+        /// <param name="g">Graphic to change, i.e. a Button, Image, etc.</param>
+        /// <param name="value">New alpha value or change to apply to the alpha value (see incremental parameter).</param>
+        /// <param name="incremental">If true, value will be added to the current alpha of the color. If false, value will be assigned as new alpha value of the color.</param>
+        /// <see cref="Colors.changeAlpha(Color, float, bool)"/>
+        public static void changeAlpha(Graphic g, float value, bool incremental = false)
+        {
+            if (g!=null) g.color = Colors.changeAlpha(g.color, value, incremental);
+        }
 
     }
 }

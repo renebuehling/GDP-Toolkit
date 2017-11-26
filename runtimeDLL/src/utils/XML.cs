@@ -38,7 +38,7 @@ namespace GameDevProfi.Utils
     public class XML
     {
         /// <summary>
-        /// Serializes the given object into a string.
+        /// Serializes the given object into a string in UTF-8 encoding.
         /// </summary>
         /// <param name="data">Object to save.</param>
         /// <returns>Serialization string.</returns>
@@ -66,7 +66,7 @@ namespace GameDevProfi.Utils
         }
 
         /// <summary>
-        /// Loads an object from a string.
+        /// Loads an object from a string in UTF-8 encoding.
         /// </summary>
         /// <param name="xml">XML sourcecode.</param>
         /// <param name="dataType">Class that should be instanced. (You may use typeof(Class) or obj.getType() get the required type.)</param>
@@ -100,7 +100,7 @@ namespace GameDevProfi.Utils
         }
 
         /// <summary>
-        /// Loads an object from a string.
+        /// Loads an object from a string in UTF-8 encoding.
         /// Same as <see cref="Load(string, System.Type)"/> 
         /// with typeparam notation.
         /// </summary>

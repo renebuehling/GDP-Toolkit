@@ -59,6 +59,7 @@
     <Compile Include="src\utils\DLL.cs" />
     <Compile Include="src\utils\UI.cs" />
     <Compile Include="src\utils\WatchForError.cs" />
+    <Compile Include="src\utils\WebForm.cs" />
     <Compile Include="src\utils\XML.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
