@@ -50,17 +50,19 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\..\Program Files\Unity2\Editor\Data\UnityExtensions\Unity\GUISystem\Standalone\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="src\utils\Animation.cs" />
-    <Compile Include="src\utils\Colors.cs" />
-    <Compile Include="src\utils\DLL.cs" />
-    <Compile Include="src\utils\UI.cs" />
-    <Compile Include="src\utils\WatchForError.cs" />
-    <Compile Include="src\utils\WebForm.cs" />
-    <Compile Include="src\utils\XML.cs" />
+    <Compile Include="src\Utils\Animation.cs" />
+    <Compile Include="src\Utils\Colors.cs" />
+    <Compile Include="src\Utils\DLL.cs" />
+    <Compile Include="src\Utils\SpaceTool.cs" />
+    <Compile Include="src\Utils\UI.cs" />
+    <Compile Include="src\Utils\WatchForError.cs" />
+    <Compile Include="src\Utils\WebForm.cs" />
+    <Compile Include="src\Utils\XML.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

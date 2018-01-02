@@ -115,6 +115,110 @@
             <param name="stream">Stream</param>
             <returns>Contents as byte array.</returns>
         </member>
+        <member name="T:GameDevProfi.Utils.SpaceTool">
+            <summary>
+            Utility for spatial calculations.
+            This class can be used in a static way by calling the static methods
+            or in an instance way by creating a Space instance and calling the methods on this object.
+            Main difference is only that the object can store the self parameter so that 
+            there is no need to pass it as parameter to every method. 
+            
+            Decision help: 
+            Use static methods when you only want to make a few measures, especially when these are for different objects.
+            Create an object when you need multiple calculations on the same object.
+            
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.SpaceTool.self">
+            <summary>
+            Cache to an object which will be passed as <c>self</c> parameter to the static functions.
+            This is usually the object the measure relates to, i.e. the player character when you want to check if a player is near something.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.#ctor(UnityEngine.Transform)">
+            <summary>
+            Create a new Space measurement tool and store the given element 
+            as starting point for measures.
+            </summary>
+            <param name="self">The first object to be passed to the measurements methods as <c>self</c> parameter.</param>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.#ctor(UnityEngine.GameObject)">
+            <summary>
+            Create a new Space measurement tool and store the given element's <c>transform</c> property
+            as starting point for measures.
+            </summary>
+            <param name="self">The first object to be passed to the measurements methods as <c>self</c> parameter.</param>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.#ctor(UnityEngine.MonoBehaviour)">
+            <summary>
+            Create a new Space measurement tool and store the given element's <c>transform</c> property
+            as starting point for measures.
+            </summary>
+            <param name="self">The first object to be passed to the measurements methods as <c>self</c> parameter.</param>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.Transform,UnityEngine.Transform)">
+            <summary>
+            Shortcut for measuring the distance between two objects.
+            </summary>
+            <param name="self">First object.</param>
+            <param name="other">Another object.</param>
+            <returns>The distance between the two objects, by measuring distance of transform origins.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.Transform)"/>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.MonoBehaviour)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.Transform)">
+            <summary>
+            Shortcut for measuring the distance between <see cref="F:GameDevProfi.Utils.SpaceTool.self"/> and another object.
+            </summary>
+            <param name="other">Other object. </param>
+            <returns>Distance between <c>self</c> and <c>other</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.Transform,UnityEngine.Transform)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.MonoBehaviour)">
+            <summary>
+            Shortcut for measuring the distance between <see cref="F:GameDevProfi.Utils.SpaceTool.self"/> and another object.
+            </summary>
+            <param name="other">Other object. </param>
+            <returns>Distance between <c>self</c> and <c>other</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.distanceTo(UnityEngine.Transform,UnityEngine.Transform)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.isDistanceTo(UnityEngine.Transform,UnityEngine.Transform,System.Single)">
+            <summary>
+            Shortcut to test if an object is close to another object.
+            </summary>
+            <param name="self">First object.</param>
+            <param name="other">The other object.</param>
+            <param name="range">Maximum distance of the other object to make this function return true.</param>
+            <returns>True if <c>other</c> is no more than <c>range</c> units away from <c>self</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.isDistanceTo(UnityEngine.Transform,System.Single)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.isDistanceTo(UnityEngine.Transform,System.Single)">
+            <summary>
+            Shortcut to test if an object is close to another object.
+            </summary>
+            <param name="other">The other object.</param>
+            <param name="range">Maximum distance of the other object to make this function return true.</param>
+            <returns>True if <c>other</c> is no more than <c>range</c> units away from <c>self</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.isDistanceTo(UnityEngine.Transform,UnityEngine.Transform,System.Single)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.directionFrom(UnityEngine.Transform,UnityEngine.Transform)">
+            <summary>
+            Calculates the direction vector from a given object towards the cow.
+            </summary>
+            <param name="other">Object to look from.</param>
+            <param name="self">Object to look at.</param>
+            <returns>Vector describing the direction from <c>other</c> towards <c>self</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.directionFrom(UnityEngine.Transform)"/>
+        </member>
+        <member name="M:GameDevProfi.Utils.SpaceTool.directionFrom(UnityEngine.Transform)">
+            <summary>
+            Calculates the direction vector from a given object towards the cow.
+            </summary>
+            <param name="other">Object to look from.</param>
+            <param name="self">Object to look at.</param>
+            <returns>Vector describing the direction from <c>other</c> towards <c>self</c>.</returns>
+            <see cref="M:GameDevProfi.Utils.SpaceTool.directionFrom(UnityEngine.Transform,UnityEngine.Transform)"/>
+        </member>
         <member name="T:GameDevProfi.Utils.UI">
             <summary>
             Utilities related to UI programming using 
