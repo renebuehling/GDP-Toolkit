@@ -372,6 +372,19 @@
             <param name="key">Name of the parameter</param>
             <param name="value">Value to submit</param>
         </member>
+        <member name="M:GameDevProfi.Utils.WebForm.Add(System.String,System.Object)">
+            <summary>
+            Any object version of <see cref="M:GameDevProfi.Utils.WebForm.Add(System.String,System.String)"/>.
+            </summary>
+            <param name="key">Name of the parameter</param>
+            <param name="value">Value to submit. If null, nothing happens, else result of toString() will be added.</param>
+        </member>
+        <member name="M:GameDevProfi.Utils.WebForm.Add(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            List version of <see cref="M:GameDevProfi.Utils.WebForm.Add(System.String,System.Object)"/>.
+            </summary>
+            <param name="items">Key-Value pairs to submit.</param>
+        </member>
         <member name="F:GameDevProfi.Utils.WebForm.result">
             <summary>
             Contains the submission results. This field should always carry
@@ -384,6 +397,21 @@
             Tiny helper that will be true if the submission was successful
             and false when there was an error. Note: This makes sense only
             after the submission was completed.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.recentError">
+            <summary>
+            Contains the recently recorded error, i.e. problems that caused
+            <see cref="F:GameDevProfi.Utils.WebForm.successful"/> to be <c>false</c>.
+            Note that this might be updated late: It may contain old information
+            while submission is still running.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.WebForm.recentResult">
+            <summary>
+            Text version of the content received. 
+            This may be the html code of a site etc.
+            In case of an error this might give additional insights on the problem.
             </summary>
         </member>
         <member name="M:GameDevProfi.Utils.WebForm.submit">

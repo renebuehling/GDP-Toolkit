@@ -82,6 +82,26 @@ namespace GameDevProfi.Utils
         }
 
         /// <summary>
+        /// Any object version of <see cref="Add(string, string)"/>.
+        /// </summary>
+        /// <param name="key">Name of the parameter</param>
+        /// <param name="value">Value to submit. If null, nothing happens, else result of toString() will be added.</param>
+        public void Add(string key, object value)
+        {
+            if (value!=null) Add(key, value.ToString());
+        }
+
+        /// <summary>
+        /// List version of <see cref="Add(string, object)"/>.
+        /// </summary>
+        /// <param name="items">Key-Value pairs to submit.</param>
+        public void Add(IDictionary<string,object> items)
+        {
+            foreach(string key in items.Keys)
+                Add(key, items[key]);
+        }
+
+        /// <summary>
         /// Contains the submission results. This field should always carry
         /// an object an never be null. You can use <code>result.isDone</code>
         /// to test if the submission was already completed.
@@ -94,6 +114,21 @@ namespace GameDevProfi.Utils
         /// after the submission was completed.
         /// </summary>
         public bool successful = false;
+
+        /// <summary>
+        /// Contains the recently recorded error, i.e. problems that caused
+        /// <see cref="successful"/> to be <c>false</c>.
+        /// Note that this might be updated late: It may contain old information
+        /// while submission is still running.
+        /// </summary>
+        public string recentError = "";
+
+        /// <summary>
+        /// Text version of the content received. 
+        /// This may be the html code of a site etc.
+        /// In case of an error this might give additional insights on the problem.
+        /// </summary>
+        public string recentResult = "";
 
         /// <summary>
         /// Performs the request, waits for it and updates <see cref="successful"/>
@@ -109,10 +144,17 @@ namespace GameDevProfi.Utils
             if (www.isNetworkError || www.isHttpError)
             {
                 successful = false;
+                recentError = www.responseCode+" "+www.error;
                 Debug.Log(www.error);
             }
             else
+            {
                 successful = true;
+                recentError = "";
+            }
+            try{
+                recentResult = www.downloadHandler.text;
+            }catch (System.Exception ex) { recentResult = "ERR: "+ex.Message;}
         }
 
         /// <summary>
