@@ -141,20 +141,21 @@ namespace GameDevProfi.Utils
             www.downloadHandler = result;
             yield return www.SendWebRequest();
 
+            try{
+                recentResult = www.downloadHandler.text;
+            }catch (System.Exception ex) { recentResult = "ERR: "+ex.Message;}
+
             if (www.isNetworkError || www.isHttpError)
             {
                 successful = false;
                 recentError = www.responseCode+" "+www.error;
-                Debug.Log(www.error);
+                Debug.LogWarning(www.responseCode+" - "+www.error+"\n"+recentResult);
             }
             else
             {
                 successful = true;
                 recentError = "";
             }
-            try{
-                recentResult = www.downloadHandler.text;
-            }catch (System.Exception ex) { recentResult = "ERR: "+ex.Message;}
         }
 
         /// <summary>
@@ -173,6 +174,7 @@ namespace GameDevProfi.Utils
             }
             catch (System.Exception ex)
             {
+                recentError = "Could not parse server answer!";
                 Debug.LogError("Could not interpret server answer: " + (result == null ? "(Result is null)" : result.text) + "\nError: " + ex.Message);
                 if (fallBackToNew) o = new T();
             }
