@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using GameDevProfi.Utils;
+using UnityEditor.Build;
 
 
 /// <summary>
@@ -36,7 +37,7 @@ namespace GameDevProfi.ProblemFinder
     /// Users can simply add a problem scanner to check for custom conditions
     /// and requirements inside Unity editor.
     /// </summary>
-    public class ProblemFinderWindow: EditorWindow
+    public class ProblemFinderWindow: EditorWindow, IPreprocessBuild, IPostprocessBuild
     {
         
         /// <summary>
@@ -76,6 +77,38 @@ namespace GameDevProfi.ProblemFinder
             //UnityEngine.Object.DestroyImmediate(icon);
             //icon = null;
         }
+
+        #region Build Events Hooks
+
+        /// <summary>
+        /// Will be true while Player builds.
+        /// </summary>
+        private bool isBuilding = false;
+
+        /// <summary>
+        /// Required by IPreprocessBuild and IPostprocessBuild.
+        /// </summary>
+        public int callbackOrder { get { return 0; } }
+
+        /// <summary>
+        /// Callback used by IPreprocessBuild.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="path"></param>
+        public void OnPreprocessBuild(BuildTarget target, string path)
+        {
+            isBuilding = true;
+        }
+        /// <summary>
+        /// Callback used by IPostprocessBuild.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="path"></param>
+        public void OnPostprocessBuild(BuildTarget target, string path)
+        {
+            isBuilding = false;
+        }
+        #endregion
 
         /// <summary>
         /// Base class for one found problem, shown in the ProblemFinder window.
@@ -229,7 +262,7 @@ namespace GameDevProfi.ProblemFinder
         //	private int prevProbs=-1;
         private void findProblems()
         {
-            if (Application.isPlaying) return;
+            if (Application.isPlaying || isBuilding) return;
             int problems = 0;
             foreach (ProblemScanner s in scanners)
             {
@@ -248,11 +281,18 @@ namespace GameDevProfi.ProblemFinder
         private bool autoRefresh = true;
 
         private Vector2 rootScrollpos = new Vector2();
+
+
         private void OnGUI()
         {
             if (Application.isPlaying)
             {
                 GUILayout.Label("Panel not available in PlayMode.");
+                return;
+            }
+            else if (isBuilding)
+            {
+                GUILayout.Label("Panel not available during Build.");
                 return;
             }
 
@@ -310,6 +350,8 @@ namespace GameDevProfi.ProblemFinder
             }
             return false;
         }
+
+        
     }
 
 }

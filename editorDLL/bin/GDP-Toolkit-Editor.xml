@@ -29,6 +29,30 @@
             Shows the window, used as menu hook.
             </summary>
         </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.isBuilding">
+            <summary>
+            Will be true while Player builds.
+            </summary>
+        </member>
+        <member name="P:GameDevProfi.ProblemFinder.ProblemFinderWindow.callbackOrder">
+            <summary>
+            Required by IPreprocessBuild and IPostprocessBuild.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.OnPreprocessBuild(UnityEditor.BuildTarget,System.String)">
+            <summary>
+            Callback used by IPreprocessBuild.
+            </summary>
+            <param name="target"></param>
+            <param name="path"></param>
+        </member>
+        <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.OnPostprocessBuild(UnityEditor.BuildTarget,System.String)">
+            <summary>
+            Callback used by IPostprocessBuild.
+            </summary>
+            <param name="target"></param>
+            <param name="path"></param>
+        </member>
         <member name="T:GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem">
             <summary>
             Base class for one found problem, shown in the ProblemFinder window.
