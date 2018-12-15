@@ -47,6 +47,20 @@ namespace GameDevProfi.Utils
             public AudioSource audioSource;
 
             /// <summary>
+            /// Tries to find the audio source automatically if not set.
+            /// </summary>
+            protected virtual void Start()
+            {
+                if (audioSource == null) audioSource = GetComponent<AudioSource>();
+
+                if (audioSource == null)
+                {
+                    Debug.LogWarning("AutoCleanup has not audioSource and could not find any. This script has no effect, disabling.");
+                    enabled = false;
+                }
+            }
+
+            /// <summary>
             /// Destroys the game object when audioSource is no longer playing.
             /// </summary>
             protected virtual void Update()
