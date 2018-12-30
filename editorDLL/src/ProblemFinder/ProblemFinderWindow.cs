@@ -259,10 +259,19 @@ namespace GameDevProfi.ProblemFinder
         private void OnProjectChange() { if (autoRefresh) findProblems(); }
         private void OnHierarchyChange() { if (autoRefresh) findProblems(); }
 
+        /// <summary>
+        /// Moment when last scanning occured. 
+        /// Used to limit the scanning workload.
+        /// </summary>
+        private float lastScan = 0f;
+
         //	private int prevProbs=-1;
         private void findProblems()
         {
             if (Application.isPlaying || isBuilding) return;
+
+            if (Mathf.Abs(Time.time - lastScan) < 1f) { /*Debug.Log("Not scanning, "+Time.time+" last:"+lastScan+" delta:"+Mathf.Abs(Time.time-lastScan));*/ return; } //scanned within 1 sec ago
+
             int problems = 0;
             foreach (ProblemScanner s in scanners)
             {
@@ -276,6 +285,7 @@ namespace GameDevProfi.ProblemFinder
             else titleContent.image = icoProblem;
             //if (problems!=prevProbs) Repaint();
             //prevProbs=problems;
+            lastScan = Time.time;
         }
 
         private bool autoRefresh = true;
@@ -306,6 +316,7 @@ namespace GameDevProfi.ProblemFinder
 
             rootScrollpos = EditorGUILayout.BeginScrollView(rootScrollpos); //,GUILayout.Width(100)); // .ExpandWidth(true));
             GUIStyle buttonStyle = new GUIStyle(EditorStyles.label); buttonStyle.richText = true;
+            bool abort = false;
             foreach (ProblemScanner s in scanners)
             {
                 GUIStyle fos = new GUIStyle(EditorStyles.foldout);
@@ -316,13 +327,19 @@ namespace GameDevProfi.ProblemFinder
                     foreach (Problem p in s.problems)
                     {
                         EditorGUILayout.BeginHorizontal();
-                        if (fixButton(p)) { findProblems(); return; }
-                        if (GUILayout.Button(new GUIContent(p.getLabel(), "Click to select gameobject."), buttonStyle)) p.select();
-                        //EditorGUILayout.SelectableLabel(p.getLabel(),GUILayout.ExpandWidth(true));
-                        //GUILayout.FlexibleSpace();
+                        try
+                        {
+                            if (fixButton(p)) { findProblems(); abort = true;}
+                            else if (GUILayout.Button(new GUIContent(p.getLabel(), "Click to select gameobject."), buttonStyle)) p.select();
+                            //EditorGUILayout.SelectableLabel(p.getLabel(),GUILayout.ExpandWidth(true));
+                            //GUILayout.FlexibleSpace();
+                        }
+                        catch { }
                         EditorGUILayout.EndHorizontal();
+                        if (abort) break;
                     }
                 }
+                if (abort) break;
             }
             EditorGUILayout.EndScrollView();
         }

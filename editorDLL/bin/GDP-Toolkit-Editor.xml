@@ -173,6 +173,12 @@
             on your class to register when the dll loads.
             </summary>
         </member>
+        <member name="F:GameDevProfi.ProblemFinder.ProblemFinderWindow.lastScan">
+            <summary>
+            Moment when last scanning occured. 
+            Used to limit the scanning workload.
+            </summary>
+        </member>
         <member name="M:GameDevProfi.ProblemFinder.ProblemFinderWindow.fixButton(GameDevProfi.ProblemFinder.ProblemFinderWindow.Problem)">
             <summary>
             Draw the fix bulb icon.

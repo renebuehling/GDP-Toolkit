@@ -48,6 +48,43 @@
             <param name="duration">Duration.</param>
             <returns>Current curve value.</returns>
         </member>
+        <member name="T:GameDevProfi.Utils.Audio">
+            <summary>
+            Utilities related to sound, music and audio processing.
+            </summary>
+        </member>
+        <member name="T:GameDevProfi.Utils.Audio.AutoCleanup">
+            <summary>
+            Helper class that destroys the gameobject as soon as
+            <see cref="F:GameDevProfi.Utils.Audio.AutoCleanup.audioSource"/> is no longer playing. 
+            Call <see cref="M:GameDevProfi.Utils.Audio.PlayClip2D(UnityEngine.AudioClip)"/> to use this component.
+            </summary>
+        </member>
+        <member name="F:GameDevProfi.Utils.Audio.AutoCleanup.audioSource">
+            <summary>
+            Audio source to monitor. 
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.Audio.AutoCleanup.Start">
+            <summary>
+            Tries to find the audio source automatically if not set.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.Audio.AutoCleanup.Update">
+            <summary>
+            Destroys the game object when audioSource is no longer playing.
+            </summary>
+        </member>
+        <member name="M:GameDevProfi.Utils.Audio.PlayClip2D(UnityEngine.AudioClip)">
+            <summary>
+            Creates an audio player that removes itself after the given clip
+            finished playing. Similar to <see cref="M:UnityEngine.AudioSource.PlayClipAtPoint(UnityEngine.AudioClip,UnityEngine.Vector3)"/>, 
+            but with preset for 2D sound and the ability to change the sound parameters
+            through the return parameter.
+            </summary>
+            <param name="clip">Clip to play.</param>
+            <returns>The generated audio source which could be used to adjust audio source settings.</returns>
+        </member>
         <member name="T:GameDevProfi.Utils.Colors">
             <summary>
             Shortcuts to color modifications.
