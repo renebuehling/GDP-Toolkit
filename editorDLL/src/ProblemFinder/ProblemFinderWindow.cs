@@ -329,7 +329,7 @@ namespace GameDevProfi.ProblemFinder
                         EditorGUILayout.BeginHorizontal();
                         try
                         {
-                            if (fixButton(p)) { findProblems(); abort = true;}
+                            if (fixButton(p)) { findProblems(); lastScan = 0f; abort = true;}
                             else if (GUILayout.Button(new GUIContent(p.getLabel(), "Click to select gameobject."), buttonStyle)) p.select();
                             //EditorGUILayout.SelectableLabel(p.getLabel(),GUILayout.ExpandWidth(true));
                             //GUILayout.FlexibleSpace();
